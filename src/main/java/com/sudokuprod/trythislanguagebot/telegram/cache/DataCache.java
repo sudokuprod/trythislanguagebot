@@ -15,7 +15,7 @@ public interface DataCache {
 
     UserProfile changeParamsByChatId(long chatId, String call);
 
-    Map<String, Integer> getResultProfileMap(UserProfile profile);
+    Map<String, Integer> getResultProfileMap(long chatId);
 
     UserProfile getUserProfileByChatId(long chatId);
 

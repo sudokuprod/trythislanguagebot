@@ -39,7 +39,7 @@ public class Bot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         try {
-            telegramListener.onUpdate(this,update);
+            telegramListener.onUpdate(this, update);
         } catch (final Exception ignored) {
         }
     }

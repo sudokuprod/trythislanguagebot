@@ -11,7 +11,6 @@ public class UserState {
     private final long chatId;
     private State currentState;
 
-
     public UserState(long chatId) {
         this(chatId, State.NO_ONE);
     }

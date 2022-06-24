@@ -7,7 +7,7 @@ public interface ProfileProvider {
 
     UserProfile getUserProfileByChatId(long chatId);
 
-    Map<String, Integer> resultProfileMap(UserProfile profile);
+    Map<String, Integer> resultProfileMap(long chatId);
 
     void removeUserProfileByChatId(long chatId);
 }

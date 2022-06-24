@@ -28,8 +28,8 @@ public class ProfileProviderImpl implements ProfileProvider {
     }
 
     @Override
-    public Map<String, Integer> resultProfileMap(final UserProfile profile) {
-        return dataCache.getResultProfileMap(profile);
+    public Map<String, Integer> resultProfileMap(final long chatId) {
+        return dataCache.getResultProfileMap(chatId);
     }
 
     @Override

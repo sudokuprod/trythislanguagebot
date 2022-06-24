@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.sudokuprod.trythislanguagebot.telegram.state.State.FIRST_Q;
+import static com.sudokuprod.trythislanguagebot.telegram.utils.ConstantText.HELLO_WORLD;
 
 
 @Slf4j
@@ -37,14 +38,7 @@ public class BackCommand implements TelegramCommand {
                         @NonNull final UserState currentState,
                         @NonNull final UserProfile profile) throws TelegramApiException {
 
-        final String helloWorld = "Перед тобой судьбоносная викторина.\n" +
-                "Жизнь разделится на до и после.\n" +
-                "Первый язык программирования, как первая любовь, на всю жизнь.\n" +
-                "Отвечай на вопросы честно, будь собой.\n" +
-                "В конце ты получишь результаты и рекомендации по изучению языка.\n" +
-                "Чтобы начать - введи своё имя";
-
-        bot.execute(responseCreator.createPhoto(message.getChatId(), "static/images/start.jpg", helloWorld,
+        bot.execute(responseCreator.createPhoto(message.getChatId(), "static/images/start.jpg", HELLO_WORLD,
                 keyboardBuilder.getBackReplyKeyboard()));
         stateProvider.changeStateByChatId(message.getChatId(), FIRST_Q);
     }

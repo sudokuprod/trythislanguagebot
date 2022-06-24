@@ -1,6 +1,5 @@
 package com.sudokuprod.trythislanguagebot.telegram.listener.impl;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.sudokuprod.trythislanguagebot.telegram.command.TelegramCommand;
 import com.sudokuprod.trythislanguagebot.telegram.command.impl.common.BackCommand;
 import com.sudokuprod.trythislanguagebot.telegram.command.impl.common.StartCommand;
@@ -97,9 +96,7 @@ public class TextMessageListener implements TelegramListener {
                 if (text.equals("Начнём заного?")) {
                     profileProvider.removeUserProfileByChatId(chatId);
                     profile = profileProvider.getUserProfileByChatId(chatId);
-                }
-                else profile = profileProvider.changeParamsByChatId(chatId, text);
-
+                } else profile = profileProvider.changeParamsByChatId(chatId, text);
 
                 final String fText = text;
                 for (TelegramCommand command : commands) {
@@ -113,15 +110,11 @@ public class TextMessageListener implements TelegramListener {
                 rollback(bot, chatId, UNKNOWN_COMMAND_MSG);
             }
 
-    } catch (final Exception e) {
-        if (e.getCause() instanceof JsonMappingException) {
-            return;
+        } catch (final Exception e) {
+            log.warn("Exception while processing telegram update {}", update, e);
+            rollback(bot, chatId, e.getMessage());
+            throw e;
         }
-
-        log.warn("Exception while processing telegram update {}", update, e);
-        rollback(bot, chatId, e.getMessage());
-        throw e;
-    }
     }
 
     private void rollback(final TelegramLongPollingBot bot,

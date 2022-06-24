@@ -24,6 +24,4 @@ public interface KeyboardBuilder {
     InlineKeyboardMarkup createInlineKeyboard(List<Map<String, String>> buttons);
 
 
-
-
 }
