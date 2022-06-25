@@ -1,6 +1,7 @@
-package com.sudokuprod.trythislanguagebot.telegram.command.impl.results;
+package com.sudokuprod.trythislanguagebot.telegram.command.impl.common;
 
-import com.sudokuprod.trythislanguagebot.telegram.command.impl.ParentByStepAndResult;
+import com.sudokuprod.trythislanguagebot.telegram.command.TelegramCommand;
+import com.sudokuprod.trythislanguagebot.telegram.keyboard.KeyboardBuilder;
 import com.sudokuprod.trythislanguagebot.telegram.profile.UserProfile;
 import com.sudokuprod.trythislanguagebot.telegram.response.ResponseCreator;
 import com.sudokuprod.trythislanguagebot.telegram.state.State;
@@ -17,15 +18,14 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.Collections;
 import java.util.List;
 
-import static com.sudokuprod.trythislanguagebot.telegram.state.State.AUTHOR_PAGE;
 import static com.sudokuprod.trythislanguagebot.telegram.state.State.CIRCLE;
-import static com.sudokuprod.trythislanguagebot.telegram.utils.ConstantText.CONTACTS;
+import static com.sudokuprod.trythislanguagebot.telegram.state.State.FIRST_Q;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ResultAuthor extends ParentByStepAndResult {
-
+public class CircleStartCommand implements TelegramCommand {
+    private final KeyboardBuilder keyboardBuilder;
     private final ResponseCreator responseCreator;
     private final StateProvider stateProvider;
 
@@ -35,13 +35,18 @@ public class ResultAuthor extends ParentByStepAndResult {
                         @NonNull final UserState currentState,
                         @NonNull final UserProfile profile) throws TelegramApiException {
 
-        bot.execute(responseCreator.createPhoto(message.getChatId(), "static/images/my.jpg", CONTACTS));
-        stateProvider.changeStateByChatId(message.getChatId(), CIRCLE);
+        bot.execute(responseCreator.createPhoto(message.getChatId(), "static/images/start.jpg", "Колесо Сансары дало оборот.\nВводи имя",
+                keyboardBuilder.getBackReplyKeyboard()));
+        stateProvider.changeStateByChatId(message.getChatId(), FIRST_Q);
+    }
 
+    @Override
+    public List<String> getCommands() {
+        return Collections.emptyList();
     }
 
     @Override
     public List<State> availCurrentStates() {
-        return Collections.singletonList(AUTHOR_PAGE);
+        return Collections.singletonList(CIRCLE);
     }
 }

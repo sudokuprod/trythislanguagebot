@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -56,7 +55,9 @@ public class ResponseCreatorImpl implements ResponseCreator {
     }
 
     @Override
-    public SendPhoto createPhoto(long chatId, String photoPath, String caption) {
+    public SendPhoto createPhoto(final long chatId,
+                                 final String photoPath,
+                                 final String caption) {
         return createPhoto(chatId, photoPath, caption, true, null);
     }
 
@@ -76,7 +77,7 @@ public class ResponseCreatorImpl implements ResponseCreator {
                                  final boolean enableNotification,
                                  final ReplyKeyboard keyboard) {
         final SendPhoto file = new SendPhoto();
-        InputFile inputFile = new InputFile(ResourceUtils.getFile("classpath:" + photoPath));
+        InputFile inputFile = new InputFile("https://raw.githubusercontent.com/sudokuprod/trythislanguagebot/master/src/main/resources/" + photoPath);
         file.setChatId(String.valueOf(chatId));
         file.setPhoto(inputFile);
         file.setCaption(caption);
@@ -87,5 +88,6 @@ public class ResponseCreatorImpl implements ResponseCreator {
         }
         return file;
     }
-
 }
+
+

@@ -2,6 +2,7 @@ package com.sudokuprod.trythislanguagebot.telegram.listener.impl;
 
 import com.sudokuprod.trythislanguagebot.telegram.command.TelegramCommand;
 import com.sudokuprod.trythislanguagebot.telegram.command.impl.common.BackCommand;
+import com.sudokuprod.trythislanguagebot.telegram.command.impl.common.CircleStartCommand;
 import com.sudokuprod.trythislanguagebot.telegram.command.impl.common.StartCommand;
 import com.sudokuprod.trythislanguagebot.telegram.listener.TelegramListener;
 import com.sudokuprod.trythislanguagebot.telegram.profile.ProfileProvider;
@@ -25,7 +26,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.sudokuprod.trythislanguagebot.telegram.Bot.UNKNOWN_COMMAND_MSG;
-
 
 @Slf4j
 @Service
@@ -54,6 +54,10 @@ public class TextMessageListener implements TelegramListener {
                 .stream()
                 .filter(c -> c.getClass().isAssignableFrom(BackCommand.class))
                 .findFirst().orElse(null));
+        this.commands.add(commands
+                .stream()
+                .filter(c -> c.getClass().isAssignableFrom(CircleStartCommand.class))
+                .findFirst().orElse(null));
         // Шаги
         this.commands.addAll(commands
                 .stream()
@@ -79,7 +83,6 @@ public class TextMessageListener implements TelegramListener {
             text = update.getMessage().getText();
             chatId = update.getMessage().getChatId();
             message = update.getMessage();
-
         }
 
         if (update.hasCallbackQuery()) {
@@ -96,6 +99,7 @@ public class TextMessageListener implements TelegramListener {
                 if (text.equals("Начнём заного?")) {
                     profileProvider.removeUserProfileByChatId(chatId);
                     profile = profileProvider.getUserProfileByChatId(chatId);
+                    profile.removeResultProfile();
                 } else profile = profileProvider.changeParamsByChatId(chatId, text);
 
                 final String fText = text;
@@ -122,6 +126,7 @@ public class TextMessageListener implements TelegramListener {
                           final String text) throws TelegramApiException {
         stateProvider.removeByChatId(chatId);
         stateProvider.createForChatId(chatId);
+        profileProvider.removeUserProfileByChatId(chatId);
         bot.execute(responseCreator.createMessage(chatId, text));
     }
 }

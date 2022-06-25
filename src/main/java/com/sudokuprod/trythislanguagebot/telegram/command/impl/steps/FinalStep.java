@@ -42,6 +42,7 @@ public class FinalStep extends ParentByStepAndResult {
                 resultBuilder(resultProfile),
                 resultKeyboardBuilder(resultProfile)));
         stateProvider.changeStateByChatId(message.getChatId(), GAP);
+        profile.removeResultProfile();
     }
 
     @Override
@@ -80,6 +81,7 @@ public class FinalStep extends ParentByStepAndResult {
         }
     }
 
+    // Собирает линии в одну клавиатуру, исходя из результатов опроса
     private InlineKeyboardMarkup resultKeyboardBuilder(final Map<String, Integer> mapProfile) {
         final InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
         final List<InlineKeyboardButton> keyboardButtons = new LinkedList<>();
@@ -92,6 +94,7 @@ public class FinalStep extends ParentByStepAndResult {
         return keyboardMarkup;
     }
 
+    // Распределяет кнопки по линиям
     private List<List<InlineKeyboardButton>> keyboardRowsBuilder(final List<InlineKeyboardButton> buttons) {
         final int[] scheme = new int[]{1, 1, 3, 3};
         final List<List<InlineKeyboardButton>> keyboardRows = new LinkedList<>();

@@ -43,6 +43,17 @@ public class UserProfile {
         return resultProfile;
     }
 
+    public void removeResultProfile() {
+        java = 0;
+        javaScript = 0;
+        csharp = 0;
+        go = 0;
+        kotlin = 0;
+        plusPlus = 0;
+        python = 0;
+        typeScript = 0;
+    }
+
     public void changeParams(final String call) {
         switch (call) {
             case ("call1"):

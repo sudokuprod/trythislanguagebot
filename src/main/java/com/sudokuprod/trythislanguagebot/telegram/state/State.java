@@ -20,5 +20,6 @@ public enum State {
     RESULT_JAVASCRIPT,
     RESULT_CSHARP,
     RESULT_KOTLIN,
-    AUTHOR_PAGE
+    AUTHOR_PAGE,
+    CIRCLE
 }
